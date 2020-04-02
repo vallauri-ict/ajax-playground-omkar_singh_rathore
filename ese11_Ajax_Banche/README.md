@@ -1,11 +1,18 @@
-# ajax-playground-omkar_singh_rathore
-**Qui ci saranno tutti i progetti fatti in classe, con il professore, e fatti a casa da noi, riguardo agli argomenti principali della materia
-tipo Javascript,Ajax,Php,Mysql..**
+# GESTIONE BANCHE
+**Questo Esercizio si tratta di una gestione del sistema bancario italiano**
 
-** Elenco di progetti:**
+**Nella Pagina iniziale troviamo il login alla banca, scegliendo ovviamente la banca e il filiale, in base a ciò che è presente nel database di Mysql.Dopo il login, vengono salvati i dati dell'utente, nella tabella corrispondente**
 
-1- Random User (progettato con html,css,javascript,jquery e ajax). Progettato principalmente per l'utilizzo di Ajax. 
+**All'interno del progetto, troviamo alcune funzioni, creati tramite php, per il lato server :**
 
-2- Gestione_Banche (progettato con html,javascript,php,mysql)  Progettato per imparare ad usare PHP e Mysql.  
+*. _libreria.php(*)*
 
-ajax-playground-omkar_singh_rathore created by GitHub Classroom
+*. elencobanche.php(*)*
+
+*. elencoCorrentisti.php(*)*
+
+*. elencofiliale.php(*)*
+ 
+ **Troviamo pure i file javascript dove principalmente viene scritto tutto per gestire completamente ed efficientemente, la gestione del sistema bancario italiano **ù
+ 
+#AJAX_BANCHE created by GitHub Classroom
