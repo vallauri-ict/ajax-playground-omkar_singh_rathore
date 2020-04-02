@@ -6,11 +6,8 @@
 **All'interno del progetto, troviamo alcune funzioni, creati tramite php, per il lato server :**
 
 *. _libreria.php(*)*
-
 *. elencobanche.php(*)*
-
 *. elencoCorrentisti.php(*)*
-
 *. elencofiliale.php(*)*
  
  **Troviamo pure i file javascript dove principalmente viene scritto tutto per gestire completamente ed efficientemente, la gestione del sistema bancario italiano **ù
