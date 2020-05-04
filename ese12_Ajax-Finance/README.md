@@ -12,6 +12,12 @@
 
 **. una casella di ricerca, con un bottone a fianco, per effettuare la ricerca di ciò che scriviamo all'interno della casella, per poi ricavare i dati, tramite la chiamata API(Application Programming Interface), e Ajax, con vari metodi utilizzati.
 
+![Ajax Finance Shot-2](https://user-images.githubusercontent.com/61886825/80996335-edaf6480-8e3f-11ea-897c-5dd7a66179b8.PNG)
+
+
+
+
+
 
 **Sotto la tabella, ci deve essere un  grafico che rappresenta i dati che ci sono sulla tabella , ed è possibile tramite utilizzo di Chart.js**
 
