@@ -1,8 +1,7 @@
 # AJAX FINANCE
 **Lo scopo di questo esercizio è quello di interrogare in modalità Ajax una API pubblica di nome “Alpha Vantage”, che dispone di moltissime chiamate per ricevere dati relativi a transazioni borsistiche.**
 
-[](url)
-![Finance-Ajax-Shot-1](https://user-images.githubusercontent.com/61886825/80994832-98725380-8e3d-11ea-84a7-d9997658fef6.PNG)
+![Finance-Ajax-Shot-1](https://user-images.githubusercontent.com/61886825/81010112-0d518780-8e56-11ea-8ef6-617a6136ec01.PNG)
 
 
 
