@@ -1,0 +1,56 @@
+html,
+body {
+  background-color: dodgerblue;
+}
+
+#wrapper {
+  width: 900px;
+  border: 1px solid black;
+  margin: 30px auto;
+  box-shadow: 0 0 20px 7px black;
+  text-align: center;
+  height:auto;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  /* margin: 10px; */
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th {
+  height: 60px;
+}
+
+td {
+  height: 30px;
+}
+
+#Titolo{
+  text-align:center;
+  margin:0,auto;
+  font-size:25pt;
+}
+#List{
+  Width:200px;
+  height:100px;
+  float:left;
+}
+
+#Search{
+  width:200px;
+  height:100px;
+  float:right;
+}
+#Lst_Companies{
+  border-radius:10%;
+  height:50px;
+  width:220px;
+  margin-top:25px;
+}

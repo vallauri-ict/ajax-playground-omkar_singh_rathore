@@ -1,0 +1,24 @@
+{
+    "companies":[
+        {
+            "Id":"MSFT",
+            "Name":"Microsoft Corporation SPA"
+        },
+        {
+            "Id":"IBM",
+            "Name":"IBM"
+        },
+        {
+            "Id":"SNE",
+            "Name":"Sony Corporation"
+        },
+        {
+            "Id":"BABA",
+            "Name":"AliBbaba China"
+        },
+        {
+            "Id":"XIACF",
+            "Name":"Xiaomi Corporation"
+        }
+    ]
+}

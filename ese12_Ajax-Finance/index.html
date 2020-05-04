@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Get Stock Quotes</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="index.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="../bootstrap-4.4.1-dist/css/bootstrap.css">
+    <script type="application/javascript" src="../bootstrap-4.4.1-dist/js/jQuery.js"></script>
+    <script type="application/javascript" src="../bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    <script type="application/json"  src="db.json"></script> 
+</head>
+
+<body>
+    <div id="wrapper" class="container-fluid">
+        <h1 id="Titolo" class="title">Alpha  Vantage</h1>
+        <br>
+        <div class="row responsive-navbar">
+            <div id="List" class="col-md">
+                <h7>Select a Company</h7>
+                <select  id="Lst_Companies" >
+                </select>
+            </div>
+            <form id="Search" class="form-inline col-md" >
+                <input class="form-control mr-sm-2 " id="txtSearch" type="text" placeholder="Search">
+                <input type="button"class="btn btn-success" value="Search">
+            </form>
+        </div>
+        <br>
+        <div id="quote">
+            <table cellspacing="0" cellpadding="3" id="tblDetails">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Last Trade</th>
+                        <th>Last Trade Time</th>
+                        <th>Change</th>
+                        <th>Open</th>
+                        <th>Previous Close</th>
+                        <th>Day's Low</th>
+                        <th>Day's High</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="symbol"></td>
+                        <td id="lastTrade"></td>
+                        <td id="lastTradeTime"></td>
+                        <td id="change"></td>
+                        <td id="open"></td>
+                        <td id="previousClose"></td>
+                        <td id="daysLow"></td>
+                        <td id="daysHigh"></td>
+                        <td id="volume"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
