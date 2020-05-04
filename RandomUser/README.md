@@ -14,6 +14,7 @@
 
 **Nella pagina ci sono vari opzioni per la ricerca di utenti che vogliamo, e in base alle scelte fatte,dopo il click di invia, viene mandato una richiesta al server(function InviaRichiesta), tramite $.Ajax(vari parametri), ed esso ci manda dei dati,come vogliamo; Infine viene rappresentato sulla pagina principale,personalizzando come abbiamo preferito,i dati come il nome,cognome,indirizzo,sesso, foto..... in modo professionale. A destra e a Sinistra troviamo due bottomi per andare avanti e indietro, per cambiare il profilo.**
 
+![RandomUser-Shot2](https://user-images.githubusercontent.com/61886825/80997978-77f8c800-8e42-11ea-9700-a87c970c147e.PNG)
 
 
 
