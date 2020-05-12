@@ -24,5 +24,9 @@
 
 **Sotto la tabella, ci deve essere un  grafico che rappresenta i dati che ci sono sulla tabella , ed è possibile tramite utilizzo di Chart.js**
 
+**grafico:**
+
+![Ajax-Finance](https://user-images.githubusercontent.com/61886825/81044267-50424800-8eb4-11ea-80a6-1b64d6c66522.PNG)
+
 
 #AJAX_FINANCE created by GitHub Classroom
