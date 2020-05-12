@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>Primo esercizio JQuery</title>
+	<style>
+		.nascondibile {}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	  /*
+	  $("p.nascondibile").click(function(){
+		$(this).hide();
+	  });
+	  */
+	  var i = 10;
+	  $("p.nascondibile").on("click", function(){
+		$(this).hide();
+		console.log(i);
+	  });
+	  $("#terzoParagrafo").click(function(){
+		$(this).css("color", "red");
+	  });
+	  $("#terzoParagrafo").one("click", function(){
+		$(this).css("font-weight", "bold");
+	  });
+	});
+	</script>
+</head>
+<body>
+	<h1>Primo esercizio JQuery</h1>
+	<p class="nascondibile">If you click on me, I will disappear.</p>
+	<p>Click me away!</p>
+	<p id="terzoParagrafo">Click me too!</p>
+</body>
+</html>
