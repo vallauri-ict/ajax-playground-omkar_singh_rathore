@@ -93,7 +93,10 @@ $(document).ready(function () {
         console.log(data);
         for(let key in data)
         {
-            $("<option>").prop("value",key).text(key).appendTo(_Sector);
+            if(key!="Meta Data")
+            {
+                $("<option>").prop("value",key).text(key).appendTo(_Sector);
+            }
         }    
     
     });
@@ -107,48 +110,54 @@ $(document).ready(function () {
     //});
 
     Chart.defaults.global.elements.rectangle.borderWidth = 5;
+    console.log(Chart.defaults.borderWidth);
 
     _Sector.on("change",function(){
         let Sector_Selected=$(this).val();
         let Details=inviaRichiesta("GET","http://localhost:3000/SECTOR",Sector_Selected);
         Details.done(function(data){
+            console.log(data[Sector_Selected]);
             UpdateGraphic(data[Sector_Selected]); 
         });
-
         Details.fail(error);
 
     });
 
     //-------------------------------------DOWNLOAD-------------------------------------------
-    $("<input>").prop({
-        "type":"button",
-        "value":"DOWNLOAD",
-        "id":"Download"
-    }).addClass("btn btn-success").appendTo($("#Options"));
-    $("#Options #Download").on("click",function(){
+    $("#Options #Download a").on("click",function(){
         ///DOWNLOAD DEL GRAFICO E SALVARLO IN UN FILE 
+        var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
+        $(this).prop("href",url_base64jp);
     })
 
+    //------------------------------------UPLOAD-----------------------------------------------
 });
 
 function UpdateGraphic(DataChart){
     let  ctx = document.getElementById('myChart').getContext('2d');
     let _Chart_Details=$.getJSON("http://localhost:3000/chart",function(chart){
-        chart["data"]["labels"]=[];
-        chart["data"]["datasets"]["data"]=[];
+    console.log(chart);
+    chart["data"]["labels"]=[];
+    chart["data"]["datasets"][0]["data"]=[];
 
-        let DataSets=chart["data"]["datasets"];
-        let Chart_Data= chart["data"];
-
+    let DataSets=chart["data"]["datasets"][0];
+    let Chart_Data= chart["data"];
+    console.log(DataSets["data"]);
+    let IndexColor1;
+    let IndexColor2;
+    let IndexColor3;
         for(let key in DataChart)
         {
-            Chart_Data["labels"].push(key);
-            DataSets["data"].push(DataChart[key]);
+            IndexColor1=Random(0,255);
+            IndexColor2=Random(0,255);
+            IndexColor3=Random(0,255);
+            Chart_Data["labels"].push(key.toUpperCase());
+            DataSets["data"].push(DataChart[key].replace("%",""));
+            DataSets["borderColor"].push("rgba("+IndexColor1+","+IndexColor2+","+IndexColor3+",1");
         }
         let Graphic=new Chart(ctx,chart);
     });   
 }
-
 
 
 function caricaTabella(data){
@@ -199,4 +208,9 @@ function error(jqXHR, text_status, string_error) {
         alert("Formato dei dati non corretto : " + jqXHR.responseText);
     else
         alert("Server Error: " + jqXHR.status + " - " + jqXHR.responseText);
+}
+
+function Random(min, max) {
+    //INCLUSIVO
+    return Math.floor((max - min + 1) * Math.random()) + min;
 }

@@ -172,7 +172,7 @@
             "datasets": [
                 {
                     "label": "Graphical Details",
-                    "barPercentage": 0.5,
+                    "barPercentage": 70.5,
                     "barThickness": 6,
                     "maxBarThickness": 8,
                     "minBarLength": 2,
@@ -206,9 +206,19 @@
         },
         "options": {
             "scales": {
+                "scaleGridLineWidth" : 30,
+                "datasetStrokeWidth" : 10,
                 "xAxes": [
                     {
-                        "barPercentage":2,
+                        "barPercentage":3,
+                        "ticks": {
+                            "beginAtZero": true
+                            }
+                        }
+                    ],
+                "yAxes": [
+                    {
+                        "barPercentage":3,
                         "ticks": {
                             "beginAtZero": true
                             }
@@ -219,8 +229,8 @@
                     "labels": {  
                         "fontSize": 20,
                         "display":false
-                        
                     }
+                    
                 }
         }
     }

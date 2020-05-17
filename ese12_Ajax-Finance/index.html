@@ -14,7 +14,24 @@
 
 <body>
     <div id="wrapper" class="container-fluid">
-        <h1 id="Titolo" class="title">Alpha  Vantage</h1>
+        <div class="navbar navbar-expand-sm bg-lighter" id="Navbar">
+            <h1 style="font-family:stencil;" class="title" id="Titolo">ALPHA VANTAGE</h1>
+            <ul class="navbar-nav" style="margin-left: 10em;">
+                <li class="nav-item btn " id="Search_Link">
+                  <a class="nav-link " href="#List">STOCK QUOTE</a>
+                </li>
+                <li class="nav-item btn" id="Graphic_Link">
+                  <a class="nav-link" href="#quote">GRAPHIC</a>
+                </li>
+                <li class="nav-item btn" id="Download_Upload_Link">
+                  <a class="nav-link" href="#Options" >DOWNLOAD & UPLOAD</a>
+                </li>
+            </ul>
+            <form id="Search" class="responsive-navbar navbar-expand-sm form-inline ">
+                <input class="form-control mr-xl-2 " id="txtSearch" type="text" placeholder="Search">
+                <input type="button"class="btn btn-success mr-xl-1" value="Search">
+            </form>
+        </div>
         <br>
         <div class="row responsive-navbar">
             <div id="List" class="col-md">
@@ -22,10 +39,6 @@
                 <select  id="Lst_Companies" >
                 </select>
             </div>
-            <form id="Search" class="form-inline col-md" >
-                <input class="form-control mr-sm-2 " id="txtSearch" type="text" placeholder="Search">
-                <input type="button"class="btn btn-success" value="Search">
-            </form>
         </div>
         <br>
         <div id="quote">
@@ -64,7 +77,14 @@
             </select>
             <canvas id="myChart" width="500" height="500"></canvas>
         </div>
-        <div id="Options">
+        <div id="Options"  class="row nav justify-content-center">
+            <div  id="Download"  class="btn btn-success  ">
+                <a  href="" download="ChartImage.jpg" style="text-align:center" >DOWNLOAD</a>
+            </div>
+            <div id="Google_Drive" >
+                <img src="Drive_Icon.png" width="50" height="50" >
+                <input type="button" value="UPLOAD" id="Upload" class="btn btn-success "> 
+            </div>
         </div>
     </div>
 </body>

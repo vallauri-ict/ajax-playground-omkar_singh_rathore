@@ -1,13 +1,4 @@
-html,
-body {
-  background-color: dodgerblue;
-}
-
 #wrapper {
-  width: 960px;
-  border: 1px solid black;
-  margin: 30px auto;
-  box-shadow: 0 0 20px 7px black;
   text-align: center;
   height:auto;
 }
@@ -61,4 +52,25 @@ td {
   border:1px solid black;
   margin:5px;
   float:left;
+}
+#Google_Drive{
+  margin-left:50px;
+  float:right;
+}
+#Options{
+  margin:0 auto;
+}
+#Download a{
+  color:white;
+  font-size: 1.2em;
+}
+a{
+  color:white;
+}
+#Download{
+  width:250px;
+}
+#Upload{
+  width:250px;
+  font-size:1.2em;
 }
