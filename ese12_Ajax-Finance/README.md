@@ -1,7 +1,8 @@
 # AJAX FINANCE
 **Lo scopo di questo esercizio è quello di interrogare in modalità Ajax una API pubblica di nome “Alpha Vantage”, che dispone di moltissime chiamate per ricevere dati relativi a transazioni borsistiche.**
 
-![Finance-Ajax-Shot-1](https://user-images.githubusercontent.com/61886825/81010112-0d518780-8e56-11ea-8ef6-617a6136ec01.PNG)
+![Alpha](https://user-images.githubusercontent.com/61886825/82270517-5b49ad80-9975-11ea-9a40-003174baaed4.PNG)
+
 
 
 
@@ -26,7 +27,13 @@
 
 **grafico:**
 
-![Ajax-Finance](https://user-images.githubusercontent.com/61886825/81044267-50424800-8eb4-11ea-80a6-1b64d6c66522.PNG)
+![Alpha_Graphic](https://user-images.githubusercontent.com/61886825/82270554-787e7c00-9975-11ea-8dfa-5a11d664de5f.PNG)
+
+**Dopo che è stato generato il grafico, appare sotto questo:**
+
+![Alpha_Options](https://user-images.githubusercontent.com/61886825/82270610-a2d03980-9975-11ea-962a-a90ac0fb13f8.PNG)
+
+**Ci sono due bottoni Download e Upload(Drive) che mi permettono di scaricare immagine del grafico, e di caricare quei File su Google Drive. Figata eh ?**. 
 
 
 #AJAX_FINANCE created by GitHub Classroom
