@@ -8,15 +8,15 @@ function signIn(clientId,redirect_uri,scope,url){
     +"&access_type=offline";
 
     // this line makes the user redirected to the url
-
     window.location = url;
+    $("#Navbar img").prop("src","img/login.png");
  }
 
  function ControlAccessToken()
  {
      if(localStorage.getItem("accessToken")==null)
      {
-         //you haven't had login before, so npw you are logout
+         //you haven't had login before.
          let web= inviaRichiesta("GET","http://localhost:3000/web");
          web.done(function(data){
              let clientId=data[0]["client_id"];
@@ -26,17 +26,6 @@ function signIn(clientId,redirect_uri,scope,url){
              setToken(clientId,redirect_uri,scope,url);
          });
          web.fail(error);
-         $("#Navbar img").prop("src","img/logout.png");
-     }
-     else if(localStorage.getItem("accessToken"))
-     { 
-         //You are Login
-         $("#Navbar img").prop("src","img/login.png");
-     }
-     else
-     {
-         //neither login, neither logout
-         alert("Firstly You must Login to this Page");
      }
  }
 
@@ -60,4 +49,13 @@ function setToken(client_id,client_secret,redirect_uri,code,scope)
            window.history.pushState({}, document.title, "/GitLoginApp/" + "upload.html");
         }
   });
+}
+
+function signOut()
+{
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("expires_in");
+    $("#Navbar img").prop("src","img/logout.png");
+    window.location.reload="index.html";
 }

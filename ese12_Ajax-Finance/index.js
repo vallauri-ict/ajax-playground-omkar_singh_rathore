@@ -31,8 +31,12 @@ const _redirect_uri="http://127.0.0.1:8080/upload.html";
 $(document).ready(function () {
     let _Sector=$("#ComboSector");
 
-    ///--------------------------------------Controllo localStorage-------------------------------------
-    ControlAccessToken();
+    ControlAccessToken(); ///Controllo di token
+    //---------------------------------------LOGIN CONTROL ACCESS-----------------
+    $("#Login").on("click",function(){ //Clicco solo per fare logout, mentre per fare login lo fa automaticamente, quando vado a fare upload dei file
+        if(localStorage.getItem("accessToken"))
+            signOut();
+    })
 
     //--------------------------------Gestione di link su navigation bar---------------------------------
     $("#Search_Link ").on("click",function(){
@@ -73,18 +77,18 @@ $(document).ready(function () {
                 let Ricerca=inviaRichiesta("GET","https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val()+ "&apikey=4OGSYZ0P5TW95U2Z");
                 Ricerca.done(function(data){
                     _table.html("");
-                    //alert("ok");
+                   //alert("ok");
                     console.log(data);
                     try
                     {
                         for(let i=0;i<4;i++)
                         {
                             let symbol=data["bestMatches"][i]["1. symbol"];
-                            let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=4OGSYZ0P5TW95U2Z",{},false);
+                            let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=4OGSYZ0P5TW95U2Z");
                             Details.done(function(data){
                                 //alert("Corretto Dati");
                                 console.log(data);
-                                _table.Append(createRow(data["Global Quote"]));
+                                createRow(data["Global Quote"]);
                             }) 
                             Details.fail(error);
                         }
@@ -107,7 +111,7 @@ $(document).ready(function () {
         let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTES&symbol="+symbol+"&apikey=4OGSYZ0P5TW95U2Z");
         Details.done(function(data){
             _table.html("");
-            _table.Append(createRow(data["Global Quote"]));
+            createRow(data["Global Quote"]);
         });
         Details.fail(error);
     })
@@ -163,15 +167,20 @@ $(document).ready(function () {
 
     $("#Upload").on("click",function(){
         ControlAccessToken();
-        let web= inviaRichiesta("GET","http://localhost:3000/web");
-        web.done(function(data){
-            let clientId=data[0]["client_id"];
-            let redirect_uri=_redirect_uri;
-            let scope=_scope;
-            let url="";
-            signIn(clientId,redirect_uri,scope,url);
-        });
-        web.fail(error);
+        if(localStorage.getItem("accessToken")==null)
+        {
+            let web= inviaRichiesta("GET","http://localhost:3000/web");
+            web.done(function(data){
+                let clientId=data[0]["client_id"];
+                let redirect_uri=_redirect_uri;
+                let scope=_scope;
+                let url="";
+                signIn(clientId,redirect_uri,scope,url);
+            });
+            web.fail(error);
+        }
+        else
+            window.location="upload.html";
     });
 
 });
@@ -212,7 +221,7 @@ function UpdateGraphic(DataChart){
 }
 
 
-function createRow(data){
+function createRow(data){ ///Data["Global Quote"]
     let _tr=$("<tr>");
     $("<td>").addClass("td").html(data["01. symbol"]).appendTo(_tr);
     $("<td>").addClass("td").html(data["05. price"]).appendTo(_tr);
@@ -222,7 +231,7 @@ function createRow(data){
     $("<td>").addClass("td").html(data["08. previous close"]).appendTo(_tr);
     $("<td>").addClass("td").html(data["03. high"]).appendTo(_tr);
     $("<td>").addClass("td").html(data["06. volume"]).appendTo(_tr);
-    return _tr;
+    _tr.appendTo(_table);
 }
 
 
