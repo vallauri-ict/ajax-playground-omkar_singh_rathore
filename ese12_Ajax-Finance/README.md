@@ -27,7 +27,8 @@
 
 **grafico:**
 
-![Ajax-Finance](https://user-images.githubusercontent.com/61886825/81044267-50424800-8eb4-11ea-80a6-1b64d6c66522.PNG)
+![Alpha_Graphic](https://user-images.githubusercontent.com/61886825/82270554-787e7c00-9975-11ea-8dfa-5a11d664de5f.PNG)
+
 
 
 #AJAX_FINANCE created by GitHub Classroom
