@@ -25,10 +25,27 @@ let  companies=[
     }
 ];
 
+const _scope="https://www.googleapis.com/auth/drive";
+const _redirect_uri="http://127.0.0.1:8080/upload.html";
 
 $(document).ready(function () {
     let _Sector=$("#ComboSector");
-    let  ctx;
+
+    ///--------------------------------------Controllo localStorage-------------------------------------
+    ControlAccessToken();
+
+    //--------------------------------Gestione di link su navigation bar---------------------------------
+    $("#Search_Link ").on("click",function(){
+        ScrollPage($("#quote"),1000);
+    });
+    $("#Graphic_Link").on("click",function(){
+        ScrollPage($("#ComboSector"),1500);
+    });
+    $("#Download_Upload_Link").on("click",function(){
+        ScrollPage($("#Options"),2000);
+    });
+    
+
 
     //----------------------------CARICAMENTO COMBOBOX COMPANIES TRADIZIONALE---------------------------------------
     
@@ -55,7 +72,7 @@ $(document).ready(function () {
             {
                 let Ricerca=inviaRichiesta("GET","https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + $(this).val()+ "&apikey=4OGSYZ0P5TW95U2Z");
                 Ricerca.done(function(data){
-                    $(_table).html("");
+                    _table.html("");
                     //alert("ok");
                     console.log(data);
                     try
@@ -67,13 +84,9 @@ $(document).ready(function () {
                             Details.done(function(data){
                                 //alert("Corretto Dati");
                                 console.log(data);
-                                caricaTabella(data["Global Quote"]);
+                                _table.Append(createRow(data["Global Quote"]));
                             }) 
                             Details.fail(error);
-                            //let url="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=4OGSYZ0P5TW95U2Z";
-                            //$.getJSON(url,function(data){
-                            //    caricaTabella(data["Global Quote"]);
-                            // })
                         }
                     }
                     catch(error){};
@@ -88,6 +101,16 @@ $(document).ready(function () {
         getGlobalQuotes(symbol);
     });
 
+    //--------------------------------------RICERCA TRAMITE BOTTONE 'SEARCH'-------------------------
+    $("#btnSearch").on("click",function(){
+        let symbol=$("#txtSearch").val().toUpperCase();
+        let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTES&symbol="+symbol+"&apikey=4OGSYZ0P5TW95U2Z");
+        Details.done(function(data){
+            _table.html("");
+            _table.Append(createRow(data["Global Quote"]));
+        });
+        Details.fail(error);
+    })
     //--------------------------------------CARICAMENTO COMBOBOX SECTOR------------------------------
     let RichiediSector=$.getJSON("http://localhost:3000/SECTOR",function(data){
         console.log(data);
@@ -110,13 +133,19 @@ $(document).ready(function () {
     //});
 
     Chart.defaults.global.elements.rectangle.borderWidth = 5;
-    console.log(Chart.defaults.borderWidth);
 
+    $("#Options").hide(); ///div di download e upload sono nascosti,finchè non c'è un grafico presente
+    $("#myChart").hide();
+    $("#Download_Upload_Link").prop("disabled",true); // per forza il link sul navigation bar di download, deve essere disabilitato se ho disabilitato l'altro 
+                                                      // e al click per generare il grafico, verranno riabilitati tutti e due. 
     _Sector.on("change",function(){
         let Sector_Selected=$(this).val();
         let Details=inviaRichiesta("GET","http://localhost:3000/SECTOR",Sector_Selected);
         Details.done(function(data){
             console.log(data[Sector_Selected]);
+            $("#myChart").show();
+            $("#Options").show();
+            $("#Download_Upload_Link").prop("disabled",false);
             UpdateGraphic(data[Sector_Selected]); 
         });
         Details.fail(error);
@@ -125,13 +154,37 @@ $(document).ready(function () {
 
     //-------------------------------------DOWNLOAD-------------------------------------------
     $("#Options #Download a").on("click",function(){
-        ///DOWNLOAD DEL GRAFICO E SALVARLO IN UN FILE 
+        ///DOWNLOAD DEL GRAFICO E SALVARLO NEL LOCALE
         var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
         $(this).prop("href",url_base64jp);
     })
 
-    //------------------------------------UPLOAD-----------------------------------------------
+    //------------------------------------UPLOAD----------------------------------------------
+
+    $("#Upload").on("click",function(){
+        ControlAccessToken();
+        let web= inviaRichiesta("GET","http://localhost:3000/web");
+        web.done(function(data){
+            let clientId=data[0]["client_id"];
+            let redirect_uri=_redirect_uri;
+            let scope=_scope;
+            let url="";
+            signIn(clientId,redirect_uri,scope,url);
+        });
+        web.fail(error);
+    });
+
 });
+
+
+
+function ScrollPage(id,time)
+{
+    $("html,body").animate({
+        scrollTop: $(id).offset().top
+    },time);
+}
+
 
 function UpdateGraphic(DataChart){
     let  ctx = document.getElementById('myChart').getContext('2d');
@@ -139,7 +192,6 @@ function UpdateGraphic(DataChart){
     console.log(chart);
     chart["data"]["labels"]=[];
     chart["data"]["datasets"][0]["data"]=[];
-
     let DataSets=chart["data"]["datasets"][0];
     let Chart_Data= chart["data"];
     console.log(DataSets["data"]);
@@ -160,15 +212,17 @@ function UpdateGraphic(DataChart){
 }
 
 
-function caricaTabella(data){
-    let _tr=$("<tr>").css({
-        "border":"1px double black"
-    });
-    for(let key in data) //key in questo caso sarebbe un dato di global quote come "01. symbol","02. open"
-    {
-        $("<td>").addClass("td").text(data[key]).appendTo(_tr);
-    }
-    _tr.appendTo(_table);
+function createRow(data){
+    let _tr=$("<tr>");
+    $("<td>").addClass("td").html(data["01. symbol"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["05. price"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["07. latest trading day"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["09. change"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["02. ooen"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["08. previous close"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["03. high"]).appendTo(_tr);
+    $("<td>").addClass("td").html(data["06. volume"]).appendTo(_tr);
+    return _tr;
 }
 
 
@@ -188,7 +242,6 @@ function getGlobalQuotes(symbol) {
         }
     );
 }
-
 
 function inviaRichiesta(method, url, parameters = "", async = true) {
     return $.ajax({ 

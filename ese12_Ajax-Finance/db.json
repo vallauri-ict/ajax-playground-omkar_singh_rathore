@@ -157,9 +157,38 @@
         }
     },
 
+    "web":[
+        {
+            "client_id":"615282420126-mj8p31p0vpvkkeu48t0cq3k9cu8fkp0b.apps.googleusercontent.com"
+        },
+        {
+            "project_id":"ajax-finance-277616"
+        },
+        {
+            "auth_uri":"https://accounts.google.com/o/oauth2/auth"
+        },
+        {
+            "token_uri":"https://oauth2.googleapis.com/token"
+        },
+        {
+            "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
+        },
+        {
+            "client_secret":"L9pIqQk4qF4rDg2EH1Q2lQbG"
+        },
+        {
+            "redirect_uris":["http://127.0.0.1:8080/upload.html"]
+        },
+        {
+            "javascript_origins":["http://127.0.0.1:8080"]
+        }
+    ],
+
+
+
 
    "chart": {
-        "type": "horizontalBar",
+        "type": "bar",
         "data": {
             "labels": [
                 "Red",

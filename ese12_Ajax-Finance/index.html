@@ -1,88 +1,93 @@
 <html>
 
 <head>
-    <title>Get Stock Quotes</title>
+    <title>Alpha Vantage</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="index.js" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="../bootstrap-4.4.1-dist/css/bootstrap.css">
-    <script type="application/javascript" src="../bootstrap-4.4.1-dist/js/jQuery.js"></script>
+    <link rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.css">
+    <script type="application/javascript" src="bootstrap-4.4.1-dist/js/jQuery.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-    <script type="application/javascript" src="../bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    <script type="application/javascript" src="bootstrap-4.4.1-dist/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script type="application/json" src="credentials.json"></script>
+    <script type="application/javascript" src="Google.js"></script>
 </head>
 
 <body>
     <div id="wrapper" class="container-fluid">
-        <div class="navbar navbar-expand-sm bg-lighter" id="Navbar">
+        <div class="navbar navbar-expand-sm responsive-navbar" id="Navbar" style="background: linear-gradient(to right,#C5DDE8,#002C73);">
             <h1 style="font-family:stencil;" class="title" id="Titolo">ALPHA VANTAGE</h1>
-            <ul class="navbar-nav" style="margin-left: 10em;">
-                <li class="nav-item btn " id="Search_Link">
-                  <a class="nav-link " href="#List">STOCK QUOTE</a>
-                </li>
-                <li class="nav-item btn" id="Graphic_Link">
-                  <a class="nav-link" href="#quote">GRAPHIC</a>
-                </li>
-                <li class="nav-item btn" id="Download_Upload_Link">
+            <div class="navbar-nav" style="margin-left: 9em;">
+                <div class="nav-item btn " id="Search_Link">
+                  <a class="nav-link" href="#quote">STOCK QUOTE</a>
+                </div>
+                <div class="nav-item btn" id="Graphic_Link">
+                  <a class="nav-link" href="#Graphic">GRAPHIC</a>
+                </div>
+                <div class="nav-item btn" id="Download_Upload_Link">
                   <a class="nav-link" href="#Options" >DOWNLOAD & UPLOAD</a>
-                </li>
-            </ul>
+                </div>
+            </div>
             <form id="Search" class="responsive-navbar navbar-expand-sm form-inline ">
                 <input class="form-control mr-xl-2 " id="txtSearch" type="text" placeholder="Search">
-                <input type="button"class="btn btn-success mr-xl-1" value="Search">
+                <input type="button"class="btn btn-success mr-xl-1" id="btnSearch" value="Search">
             </form>
+            <img src="img/logout.png" width="50px;" height="50px;" style="margin-left:6em; margin-bottom:1em"></img>
         </div>
         <br>
-        <div class="row responsive-navbar">
-            <div id="List" class="col-md">
-                <h7>Select a Company</h7>
-                <select  id="Lst_Companies" >
-                </select>
+        <div class="col-md-12" id="quote" >
+                <h2 style="text-align: center; font-family: bodoni mt;">GET STOCK QUOTES</h2>
+                <div id="List" class="col">
+                    <h7 style="color:white; text-shadow:2px 2px 7px black;">SELECT A COMPANY</h7>
+                    <select  id="Lst_Companies" ></select>
+                </div>
+            <br>
+            <div>
+                <table cellspacing="0" cellpadding="3" id="tblDetails">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Last Trade</th>
+                            <th>Last Trade Time</th>
+                            <th>Change</th>
+                            <th>Open</th>
+                            <th>Previous Close</th>
+                            <th>Day's Low</th>
+                            <th>Day's High</th>
+                            <th>Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="symbol"></td>
+                            <td id="lastTrade"></td>
+                            <td id="lastTradeTime"></td>
+                            <td id="change"></td>
+                            <td id="open"></td>
+                            <td id="previousClose"></td>
+                            <td id="daysLow"></td>
+                            <td id="daysHigh"></td>
+                            <td id="volume"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <br>
-        <div id="quote">
-            <table cellspacing="0" cellpadding="3" id="tblDetails">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Last Trade</th>
-                        <th>Last Trade Time</th>
-                        <th>Change</th>
-                        <th>Open</th>
-                        <th>Previous Close</th>
-                        <th>Day's Low</th>
-                        <th>Day's High</th>
-                        <th>Volume</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="symbol"></td>
-                        <td id="lastTrade"></td>
-                        <td id="lastTradeTime"></td>
-                        <td id="change"></td>
-                        <td id="open"></td>
-                        <td id="previousClose"></td>
-                        <td id="daysLow"></td>
-                        <td id="daysHigh"></td>
-                        <td id="volume"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container col-md-12" id ="Graphic" style="width: 700;">
+            <h2 style="margin:5px; font-family:'Times New Roman', Times, serif;">QUOTES'S GRAPHIC</h2>
+            <select id="ComboSector"></select>
+            <canvas id="myChart" width="600" height="450" ></canvas>
         </div>
-        <br>
-        <div class="container" style="width:600px;">
-            <select id="ComboSector">
-            </select>
-            <canvas id="myChart" width="500" height="500"></canvas>
-        </div>
-        <div id="Options"  class="row nav justify-content-center">
-            <div  id="Download"  class="btn btn-success  ">
-                <a  href="" download="ChartImage.jpg" style="text-align:center" >DOWNLOAD</a>
+        <h2 id="DoUpTitle" > DOWNLOAD & UPLOAD THE IMAGE</h2>
+        <div id="Options"  class=" row justify-content-center">
+            <div  id="Download"  class="btn btn-primary">
+                <a  href="" download="ChartImage.jpg" style="text-align:center">DOWNLOAD</a>
             </div>
             <div id="Google_Drive" >
-                <img src="Drive_Icon.png" width="50" height="50" >
+                <img src="img/Drive_Icon.png" width="50" height="50" >
                 <input type="button" value="UPLOAD" id="Upload" class="btn btn-success "> 
             </div>
         </div>
