@@ -33,7 +33,7 @@ $(document).ready(function () {
 
     ControlAccessToken(); ///Controllo di token
     //---------------------------------------LOGIN CONTROL ACCESS-----------------
-    $("#Login").on("click",function(){ //Clicco solo per fare logout, mentre per fare login lo fa automaticamente, quando vado a fare upload dei file
+    $("#LogOut").on("click",function(){ //Clicco solo per fare logout, mentre per fare login lo fa automaticamente, quando vado a fare upload dei file
         if(localStorage.getItem("accessToken"))
             signOut();
     })
