@@ -181,6 +181,9 @@
         },
         {
             "javascript_origins":["http://127.0.0.1:8080"]
+        },
+        {
+            "scope":"https://www.googleapis.com/auth/drive"
         }
     ],
 

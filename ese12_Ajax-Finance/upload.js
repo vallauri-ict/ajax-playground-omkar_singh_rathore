@@ -1,13 +1,12 @@
 $(document).ready(function(){
-    
-
+    let _url = "";
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     const redirect_uri = "http://127.0.0.1:8080/upload.html" // replace with your redirect_uri;
     const client_secret = "L9pIqQk4qF4rDg2EH1Q2lQbG"; // replace with your client secret
     const scope = "https://www.googleapis.com/auth/drive";
-    var access_token= "";
-    var client_id = "615282420126-mj8p31p0vpvkkeu48t0cq3k9cu8fkp0b.apps.googleusercontent.com"// replace it with your client id;
+    let access_token= "";
+    let client_id = "615282420126-mj8p31p0vpvkkeu48t0cq3k9cu8fkp0b.apps.googleusercontent.com"// replace it with your client id;
     $("#ok").hide();
     setToken(client_id,client_secret,redirect_uri,code,scope);
 
@@ -18,6 +17,9 @@ $(document).ready(function(){
         // execute upload
         upload.doUpload();
         $("#ok").show();
+        setTimeout(function(){
+            window.location="index.html";
+        },3000);
     });
    
 
@@ -73,6 +75,7 @@ $(document).ready(function(){
             },
             success: function (data) {
                 console.log(data);
+
             },
             error: function (error) {
                 console.log(error);

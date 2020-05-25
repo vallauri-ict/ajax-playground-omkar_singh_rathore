@@ -1,6 +1,6 @@
 "use strict";
 
-let _table=$("#tblDetails tbody");
+let _table=$("#tblDetails tbody").eq(0);
 
 let  companies=[
     {
@@ -25,17 +25,14 @@ let  companies=[
     }
 ];
 
-const _scope="https://www.googleapis.com/auth/drive";
-const _redirect_uri="http://127.0.0.1:8080/upload.html";
 
 $(document).ready(function () {
     let _Sector=$("#ComboSector");
 
-    ControlAccessToken(); ///Controllo di token
-    //---------------------------------------LOGIN CONTROL ACCESS-----------------
-    $("#LogOut").on("click",function(){ //Clicco solo per fare logout, mentre per fare login lo fa automaticamente, quando vado a fare upload dei file
+    $("#logout").on("click",function(){
         if(localStorage.getItem("accessToken"))
             signOut();
+            $(this).hide();
     })
 
     //--------------------------------Gestione di link su navigation bar---------------------------------
@@ -79,8 +76,9 @@ $(document).ready(function () {
                     _table.html("");
                    //alert("ok");
                     console.log(data);
-                    try
-                    {
+                    if(!("Note" in data))
+                    {/*
+                        QUESTO E' LA SOLUZIONE PER AVERE PIU' RIGHE NELLA TABELLA 
                         for(let i=0;i<4;i++)
                         {
                             let symbol=data["bestMatches"][i]["1. symbol"];
@@ -88,12 +86,29 @@ $(document).ready(function () {
                             Details.done(function(data){
                                 //alert("Corretto Dati");
                                 console.log(data);
-                                createRow(data["Global Quote"]);
+                                if("Note" in data) //ho raggiunto il limite delle chiamate
+                                    alert("Raggiunto il limite delle chiamate");
+                                else 
+                                    createRow(data["Global Quote"]);
                             }) 
                             Details.fail(error);
                         }
+                    */
+
+                    //VOLEVO USARE LA SOLUZIONE DI PRIMA,PERO' A QUANTO FUNZIONA APPEND AL TABLE , E QUINDI HO DOVUTO USARE QUESTA SOLUZIONE SOTTO
+
+                    //  SOLUZIONE PER UNA SOLA RIGA NELLA TABELLA
+                        let symbol= data["bestMatches"][0]["1. symbol"];
+                        let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=4OGSYZ0P5TW95U2Z");
+                        Details.done(function(data){
+                            if("Note" in data)
+                                alert("Raggiunto il limite  delle chiamate");
+                            else
+                                setRow(data);
+                        })
+                        Details.fail(error);
                     }
-                    catch(error){};
+                    
                 });
                 Ricerca.fail(error);
             }
@@ -102,6 +117,7 @@ $(document).ready(function () {
     //---------------------------------------RICERCA TRAMITE COMBOBOX---------------------------------
     $("#Lst_Companies").on("change",function(){
         let symbol=$(this).prop("value");
+        _table.html("");
         getGlobalQuotes(symbol);
     });
 
@@ -111,7 +127,8 @@ $(document).ready(function () {
         let Details=inviaRichiesta("GET","https://www.alphavantage.co/query?function=GLOBAL_QUOTES&symbol="+symbol+"&apikey=4OGSYZ0P5TW95U2Z");
         Details.done(function(data){
             _table.html("");
-            createRow(data["Global Quote"]);
+            //createRow(data["Global Quote"]);
+            setRow(data);
         });
         Details.fail(error);
     })
@@ -152,40 +169,47 @@ $(document).ready(function () {
             $("#Download_Upload_Link").prop("disabled",false);
             UpdateGraphic(data[Sector_Selected]); 
         });
-        Details.fail(error);
+        Details.fail(error)
+        {
+            console.log(error);
+        };
 
     });
 
-    //-------------------------------------DOWNLOAD-------------------------------------------
+    //-------------------------------------DOWNLOAD------------------------------------------
+    $("#Upload").prop("disabled",true); // sarà disabilitato finchè non avrò fatto il download
     $("#Options #Download a").on("click",function(){
         ///DOWNLOAD DEL GRAFICO E SALVARLO NEL LOCALE
         var url_base64jp = document.getElementById("myChart").toDataURL("image/jpg");
         $(this).prop("href",url_base64jp);
+        $("#Upload").prop("disabled",false);
     })
 
     //------------------------------------UPLOAD----------------------------------------------
 
     $("#Upload").on("click",function(){
-        ControlAccessToken();
         if(localStorage.getItem("accessToken")==null)
         {
             let web= inviaRichiesta("GET","http://localhost:3000/web");
             web.done(function(data){
                 let clientId=data[0]["client_id"];
-                let redirect_uri=_redirect_uri;
-                let scope=_scope;
+                let redirect_uri=data[6]["redirect_uris"][0];
+                let scope=data[8]["scope"];
                 let url="";
                 signIn(clientId,redirect_uri,scope,url);
+                $("#logout").show();
             });
             web.fail(error);
         }
-        else
-            window.location="upload.html";
+        else{
+            window.location.href="upload.html";   
+        }
     });
 
 });
 
 
+//__________________________________________________FUNCTIONS______________________________________________
 
 function ScrollPage(id,time)
 {
@@ -221,36 +245,39 @@ function UpdateGraphic(DataChart){
 }
 
 
+
 function createRow(data){ ///Data["Global Quote"]
     let _tr=$("<tr>");
-    $("<td>").addClass("td").html(data["01. symbol"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["05. price"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["07. latest trading day"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["09. change"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["02. ooen"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["08. previous close"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["03. high"]).appendTo(_tr);
-    $("<td>").addClass("td").html(data["06. volume"]).appendTo(_tr);
-    _tr.appendTo(_table);
+    let _td;
+    _td = $("<td>").addClass("td").html(data["01. symbol"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["05. price"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["07. latest trading day"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["09. change"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["02. open"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["08. previous close"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["03. high"]).appendTo(_tr);
+    _td = $("<td>").addClass("td").html(data["06. volume"]).appendTo(_tr);
+    _table.append(_tr);
 }
 
 
 function getGlobalQuotes(symbol) {
     let url="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=4OGSYZ0P5TW95U2Z";
-    $.getJSON(url,function (data) {
-            $("#symbol").text(data["Global Quote"]["01. symbol"]);
-            let globalQuoteData = data["Global Quote"];
-            $("#previousClose").text(globalQuoteData["08. previous close"]);
-            $("#open").text(globalQuoteData["02. open"]);
-            $("#lastTrade").text(globalQuoteData["05. price"]);
-            $("#lastTradeTime").text(globalQuoteData["07. latest trading day"]);
-            $("#change").text(globalQuoteData["09. change"]);
-            $("#daysLow").text(globalQuoteData["04. low"]);
-            $("#daysHigh").text(globalQuoteData["03. high"]);
-            $("#volume").text(globalQuoteData["06. volume"]);
-        }
-    );
+    $.getJSON(url,function(data){setRow(data)});
 }
+function setRow(data){
+    $("#symbol").text(data["Global Quote"]["01. symbol"]);
+    let globalQuoteData = data["Global Quote"];
+    $("#previousClose").text(globalQuoteData["08. previous close"]);
+    $("#open").text(globalQuoteData["02. open"]);
+    $("#lastTrade").text(globalQuoteData["05. price"]);
+    $("#lastTradeTime").text(globalQuoteData["07. latest trading day"]);
+    $("#change").text(globalQuoteData["09. change"]);
+    $("#daysLow").text(globalQuoteData["04. low"]);
+    $("#daysHigh").text(globalQuoteData["03. high"]);
+    $("#volume").text(globalQuoteData["06. volume"]);
+}
+
 
 function inviaRichiesta(method, url, parameters = "", async = true) {
     return $.ajax({ 
