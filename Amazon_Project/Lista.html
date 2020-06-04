@@ -1,0 +1,99 @@
+<!DOCTYPE html> <!-- documento html5 -->
+<html>
+<head>
+   <title> Amazon Lite </title>
+   <script type="application/javascript" src="jQuery.js">  </script>
+   <script type="application/javascript" src="Lista.js">  </script>
+   <script type="application/javascript" src="libreria.js"></script>
+    <link id="stylesheet" rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css"/>
+    <script src="jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-ui.js"></script>
+	<script type="application/javascript" src="bootstrap-4.4.1-dist/js/jQuery.js"></script>
+	<script type="application/javascript" src="bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="index.css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <style>
+        #wrapper{
+            width:100%;
+            height:100%;
+        }
+        #mainContent{
+            height:auto;
+            width:100%;
+            border:none;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+	<div id="wrapper" class="container-fluid">
+        <div class="navbar bg-dark" id="Navbar">
+            <img src="img/Amazon-Walpaper.jpg" width="70px" height="50px" class="rounded-corners">
+            <h1 style="text-align: center; margin-left:11.4em">AMAZON LITE</h1>
+            <a class="nav-link" style="color: white; font-size: o.6em; " href="index.html">HOME</a>
+            <a class="nav-link" style="color: white; font-size: o.6em; " href="about.html">ABOUT US</a>
+            <div id="logout"></div>
+        </div>
+        <div id="mainContent" class="container-fluid col-md-12 ">
+            <div id="TableOptions" class="row">
+                <div class="dropdown col-md-4"  id="categoria" > <!--Utilizzato solo in caso se ho cliccato accessori card -->
+                    <button  type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">CATEGORY</button>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item">INFORMATICA</div>
+                        <div class="dropdown-item">ELETTRONICA</div>
+                        <div class="dropdown-item">LIBRO</div>
+                        <div class="dropdown-item">CASA</div>
+                    </div>
+                </div>
+                <div class="dropdown col-md-4 " id="FiltraPrezzo">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        FILTRE PER PREZZO
+                      </button>
+                      <div class="dropdown-menu">
+                        <div class="dropdown-item">0-100 EURO</div>
+                        <div class="dropdown-item">100-300 EURO</div>
+                        <div class="dropdown-item">300-1000 EURO</div>
+                      </div>
+                </div>
+                <div class="dropdown col-md-4 " id="Ordinamento">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        ORDINA PER
+                      </button>
+                      <div class="dropdown-menu">
+                        <div class="dropdown-item">PREZZO(crescente)</div>
+                        <div class="dropdown-item">PREZZO(decrescente)</div>
+                        <div class="dropdown-item">ALFABETICO(crescente)</div>
+                        <div class="dropdown-item">ALFABETICO(decrescente)</div>
+                      </div>
+                </div>
+                <form id="Search" class="responsive-navbar navbar-expand-sm form-inline " style="margin-bottom:20px; float: right;">
+                    <input class="form-control mr-xl-2 " id="txtSearch" type="text" placeholder="Search name">
+                    <input type="button"class="btn btn-success mr-xl-1" id="btnSearch" value="Search">
+                </form>
+            </div>
+            <h2 style="text-align: left;font-family: bodoni mt; margin:30px auto">LIST:</h2>
+            <table class="table  table-striped table-hover" id="table"> 
+                <thead class="thead-dark">
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+        <footer id="footer" class="page-footer font-small blue pt-4 bg-dark ">
+            <h4 class="text-center py-3 text-white">Projected By Omkar Singh Rathore</h4>
+            <div class="footer-copyright text-center py-3 text-white">© 2020 Copyright:
+                <a href="http://www.vallauri.edu/public/ita/pagina.asp"> Vallauri.edu</a>
+             </div>
+        </footer>   
+	</div>
+</body>
+</html>
